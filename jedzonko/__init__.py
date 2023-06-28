@@ -1,3 +1,2 @@
-# komentaz
-# Mariusz Fortuna
+
 

@@ -15,11 +15,8 @@ class IndexView(View):
 class DashboardView(View):
 
     def get(self, request):
-        if request.method == 'GET':
             recipes_count = Recipe.objects.count()
             return render(request, template_name='dashboard.html', context={'recipes_count': recipes_count})
-        else:
-            return render(request, template_name='dashboard.html')
 
 class RecipeView(View):
     def get(self, request):

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-from jedzonko.views import IndexView, RecipeView
+from jedzonko.views import RecipeView, IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

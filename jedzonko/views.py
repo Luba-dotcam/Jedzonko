@@ -24,37 +24,27 @@ class RecipeView(View):
         return render(request, "app-recipes.html")
 
 
-
-
 class RecipeDetailsView(View):
-    def get(self, request, id):
-        recipe = Recipe.objects.get(id=id)
-        context = {
-            'recipe': recipe
-        }
-        return render(request, 'app-recipe-details.html', context)
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(id=recipe_id)
+        return render(request, 'app-recipe-details.html', ccontext={"recipe": recipe})
 
 
 class RecipeAddView(View):
     def get(self, request):
         return render(request, 'app-add-recipe.html')
 
+
 class RecipeModifyView(View):
-    def get(self, request, id):
-        recipe = Recipe.objects.get(id=id)
-        context = {
-            'recipe': recipe
-        }
-        return render(request, 'app-edit-recipe.html', context)
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(id=recipe_id)
+        return render(request, 'app-edit-recipe.html', context={"recipe": recipe})
 
 
 class PlanDetailsView(View):
-    def get(self, request, id):
-        plan = Plan.objects.get(id=id)
-        context = {
-            'plan': plan
-        }
-        return render(request, 'app-details-schedules.html.html', context)
+    def get(self, request, plan_id):
+        plan = Plan.objects.get(id=plan_id)
+        return render(request, 'app-details-schedules.html.html', context={"plan": plan})
 
 
 class PlanAddView(View):
@@ -66,4 +56,6 @@ class PlanAddRecipeView(View):
         return render(request, 'app-schedules-meal-recipe.html')
 
 
-
+class PlanView(View):
+    def get(self, request):
+        return render(request, 'app-schedules.html')

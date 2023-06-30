@@ -2,7 +2,7 @@ from random import shuffle
 from datetime import datetime
 from django.views import View
 from django.shortcuts import render
-from .models import Recipe
+from .models import Recipe, Plan
 
 class IndexView(View):
     def get(self, request):
@@ -20,9 +20,15 @@ class IndexView(View):
 
 
 class DashboardView(View):
-
     def get(self, request):
-        return render(request, template_name='dashboard.html')
+        plan_count = Plan.objects.count()
+        recipes_all = list(Recipe.objects.all())
+        total_count = len(recipes_all)
+        ctx = {
+            'total_count': total_count,
+            'plan count': plan_count
+        }
+        return render(request, template_name='dashboard.html', context=ctx)
 
 
 

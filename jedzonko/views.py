@@ -1,4 +1,4 @@
-import random
+from random import shuffle
 from datetime import datetime
 from django.views import View
 from django.shortcuts import render
@@ -7,7 +7,7 @@ from .models import Recipe
 class IndexView(View):
     def get(self, request):
         recipes_all = list(Recipe.objects.all())
-        random.shuffle(recipes_all)
+        shuffle(recipes_all)
         ctx = {"actual_date": datetime.now(),
            'recipes_1_name': recipes_all[0].name,
            'recipes_1_description': recipes_all[0].description,

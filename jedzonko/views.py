@@ -8,7 +8,9 @@ class IndexView(View):
     def get(self, request):
         recipes_all = list(Recipe.objects.all())
         shuffle(recipes_all)
+        total_count = len(recipes_all)
         ctx = {"actual_date": datetime.now(),
+           'total_count': total_count,
            'recipes_1_name': recipes_all[0].name,
            'recipes_1_description': recipes_all[0].description,
            'recipes_2_name': recipes_all[1].name,

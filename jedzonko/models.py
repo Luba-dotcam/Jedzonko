@@ -13,3 +13,6 @@ class Recipe(models.Model):
     preparation_time = models.PositiveIntegerField()
     votes = models.IntegerField(default=0)
 
+    @classmethod
+    def get_total_count(cls):
+        return cls.objects.count()

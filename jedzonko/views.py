@@ -24,7 +24,7 @@ class RecipeView(View):
         return render(request, "app-recipes.html")
 
 
-class AddRecipe(View):
+class AddRecipeView(View):
     def get(self, request):
         return render(request, template_name='app-add-recipe.html')
 

@@ -15,10 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-
-
 from jedzonko.views import IndexView, RecipeView, DashboardView
-
 
 
 urlpatterns = [

@@ -14,13 +14,13 @@ class IndexView(View):
         recipes_all = list(Recipe.objects.all())
         shuffle(recipes_all)
         ctx = {"actual_date": datetime.now(),
-           'recipes_1_name': recipes_all[0].name,
-           'recipes_1_description': recipes_all[0].description,
-           'recipes_2_name': recipes_all[1].name,
-           'recipes_2_description': recipes_all[1].description,
-           'recipes_3_name': recipes_all[2].name,
-           'recipes_3_description': recipes_all[2].description
-           }
+               'recipes_1_name': recipes_all[0].name,
+               'recipes_1_description': recipes_all[0].description,
+               'recipes_2_name': recipes_all[1].name,
+               'recipes_2_description': recipes_all[1].description,
+               'recipes_3_name': recipes_all[2].name,
+               'recipes_3_description': recipes_all[2].description
+               }
         return render(request, "index.html", ctx)
 
 
@@ -61,6 +61,7 @@ class PlanDetailsView(View):
 class PlanAddView(View):
     def get(self, request):
         return render(request, 'app-add-schedules.html')
+
 
 class PlanAddRecipeView(View):
     def get(self, request):

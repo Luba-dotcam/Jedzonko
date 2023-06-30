@@ -11,7 +11,9 @@ class Recipe(models.Model):
     preparation_time = models.PositiveIntegerField()
     votes = models.IntegerField(default=0)
 
+
 class Plan(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+

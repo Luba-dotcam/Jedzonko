@@ -1,11 +1,17 @@
 from random import shuffle
 from datetime import datetime
+
+from random import shuffle
+from django.shortcuts import render
 from django.views import View
 from django.shortcuts import render
 from .models import Recipe
 
+
 class IndexView(View):
     def get(self, request):
+
+        # ctx = {"actual_date": datetime.now()}
         recipes_all = list(Recipe.objects.all())
         shuffle(recipes_all)
         ctx = {"actual_date": datetime.now(),
@@ -30,3 +36,40 @@ class RecipeView(View):
     def get(self, request):
         return render(request, "app-recipes.html")
 
+
+class RecipeDetailsView(View):
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(id=recipe_id)
+        return render(request, 'app-recipe-details.html', context={"recipe": recipe})
+
+
+class RecipeAddView(View):
+    def get(self, request):
+        return render(request, 'app-add-recipe.html')
+
+
+class RecipeModifyView(View):
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(id=recipe_id)
+        return render(request, 'app-edit-recipe.html', context={"recipe": recipe})
+
+
+class PlanDetailsView(View):
+    def get(self, request, plan_id):
+        plan = Plan.objects.get(id=plan_id)
+        return render(request, 'app-details-schedules.html', context={"plan": plan})
+
+
+class PlanAddView(View):
+    def get(self, request):
+        return render(request, 'app-add-schedules.html')
+
+
+class PlanAddRecipeView(View):
+    def get(self, request):
+        return render(request, 'app-schedules-meal-recipe.html')
+
+
+class PlanView(View):
+    def get(self, request):
+        return render(request, 'app-schedules.html')

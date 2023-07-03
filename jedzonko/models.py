@@ -7,6 +7,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     ingredients = models.TextField()
     description = models.TextField()
+    descritpion_preparing = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     preparation_time = models.PositiveIntegerField()
@@ -31,7 +32,7 @@ class DayName(models.Model):
         (7, 'Sunday'),
 
     )
-    name = models.CharField(choices=DAYSNAME, max_length=20)
+    name = models.IntegerField(choices=DAYSNAME)
     order = models.IntegerField(unique=True)
 
 

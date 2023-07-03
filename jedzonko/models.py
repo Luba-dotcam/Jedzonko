@@ -7,7 +7,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     ingredients = models.TextField()
     description = models.TextField()
-    descritpion_preparing = models.TextField()
+    description_preparing = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     preparation_time = models.PositiveIntegerField()

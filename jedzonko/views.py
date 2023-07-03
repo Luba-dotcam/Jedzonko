@@ -1,17 +1,13 @@
 from random import shuffle
 from datetime import datetime
-
-from random import shuffle
 from django.shortcuts import render
 from django.views import View
-from django.shortcuts import render
-from .models import Recipe
 
+from jedzonko.models import Recipe
 
 class IndexView(View):
+  
     def get(self, request):
-
-        # ctx = {"actual_date": datetime.now()}
         recipes_all = list(Recipe.objects.all())
         shuffle(recipes_all)
         ctx = {"actual_date": datetime.now(),
@@ -36,16 +32,30 @@ class RecipeView(View):
     def get(self, request):
         return render(request, "app-recipes.html")
 
+      
+class RecipeAddView(View):
+    def get(self, request):
+        return render(request, template_name='app-add-recipe.html')
 
+    def post(self, request):
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        preparation_time = request.POST.get('preparation_time')
+        ingredients = request.POST.get('ingredients')
+        # code below "to unlock later"
+        # descritpion_preparing = request.POST.get('descritpion_preparing')
+
+        Recipe.objects.create(name=name,
+                              description=description,
+                              ingredients=ingredients,
+                              preparation_time=preparation_time,
+                              votes=0)
+        return render(request, template_name='app-add-recipe.html')
+      
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
         return render(request, 'app-recipe-details.html', context={"recipe": recipe})
-
-
-class RecipeAddView(View):
-    def get(self, request):
-        return render(request, 'app-add-recipe.html')
 
 
 class RecipeModifyView(View):

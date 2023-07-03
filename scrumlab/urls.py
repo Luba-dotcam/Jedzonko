@@ -19,6 +19,8 @@ from django.contrib import admin
 from jedzonko.views import IndexView, RecipeView, DashboardView, RecipeDetailsView, RecipeAddView, RecipeModifyView, \
     PlanDetailsView, PlanAddView, PlanAddRecipeView, PlanView
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),

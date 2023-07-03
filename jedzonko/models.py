@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 # Create your models here.
 
 class Recipe(models.Model):
@@ -11,3 +12,4 @@ class Recipe(models.Model):
     update = models.DateTimeField(auto_now=True)
     preparation_time = models.PositiveIntegerField()
     votes = models.IntegerField(default=0)
+

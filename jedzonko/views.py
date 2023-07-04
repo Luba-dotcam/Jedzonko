@@ -35,7 +35,7 @@ class RecipeView(View):
     def get(self, request):
         recipes_list = Recipe.objects.all().order_by('-votes', '-created').values()
         # definicja stronicowania, przekazujemy pobrane elementy oraz liczbę elementów na stronę
-        paginator = Paginator(recipes_list, 2)
+        paginator = Paginator(recipes_list, 50)
         page = request.GET.get('page')
         recipes = paginator.get_page(page)
         return render(request, "app-recipes.html", context={'recipes': recipes})

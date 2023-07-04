@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody class="text-color-lighter">
-            {% for plan in page_obj %}
+            {% for plan in plans %}
             <tr class="d-flex">
                 <td class="col-1">{{ plan.id }}</td>
                 <td class="col-2">{{ plan.name }}</td>
@@ -47,20 +47,24 @@
 
 
     <div class="pagination d-flex justify-content-center">
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">Poprzednia</a>
+        {% if plans.has_previous %}
+        <a href="?page={{ plans.previous_page_number }}" >&lt; Poprzednia</a>
         {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-        <a href="?page={{ num }}" class="btn btn-primary">{{ num }}</a>
-        {% else %}
-        <a href="?page={{ num }}" class="btn btn-secondary">{{ num }}</a>
+        {% if plans.paginator.num_pages > 1 %}
+            {% for num in plans.paginator.page_range %}
+            {% if plans.number == num %}
+            <a href="?page={{ num }}" >|{{ num }}|</a>
+            {% else %}
+            <a href="?page={{ num }}" >|{{ num }}|</a>
+            {% endif %}
+            {% endfor %}
         {% endif %}
-        {% endfor %}
 
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Następna</a>
+
+
+        {% if plans.has_next %}
+        <a href="?page={{ plans.next_page_number }}" >Następna &gt</a>
         {% endif %}
     </div>
 

@@ -1,9 +1,10 @@
 from random import shuffle
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from django.http import HttpResponse
 from django.core.paginator import Paginator
-from .models import Recipe
+from .models import Recipe, Plan
 
 
 from jedzonko.models import Recipe
@@ -83,8 +84,18 @@ class PlanAddView(View):
         return render(request, 'app-add-schedules.html')
 
     def post(self, request):
-        # do napisania logika zapisania danych z formularza do bazy danych
-        return render(request, 'app-add-schedules.html')
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        if name != '' and description != '':
+            plan = Plan.objects.create(
+                name=name,
+                description=description
+            )
+            return redirect('plan-details', plan.id)
+        else:
+            return render(request, 'app-add-schedules.html',
+                          context={'error': 'Wszystkie pola muszą zostać uzupełnione'}
+                          )
 
 
 class PlanAddRecipeView(View):

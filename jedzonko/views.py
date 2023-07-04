@@ -1,6 +1,6 @@
 from random import shuffle
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from jedzonko.models import Recipe
@@ -54,7 +54,7 @@ class RecipeAddView(View):
                                   description_preparing=description_preparing,
                                   preparation_time=preparation_time,
                                   votes=0)
-            return render(request, template_name='app-recipes.html')
+            return redirect('recipe-list')
         else:
             return render(request, template_name='app-add-recipe.html',
                           context={'error': 'Wszystkie pola muszą zostać uzupełnione'}

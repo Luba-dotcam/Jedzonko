@@ -82,6 +82,10 @@ class PlanAddView(View):
     def get(self, request):
         return render(request, 'app-add-schedules.html')
 
+    def post(self, request):
+        # do napisania logika zapisania danych z formularza do bazy danych
+        return render(request, 'app-add-schedules.html')
+
 
 class PlanAddRecipeView(View):
     def get(self, request):

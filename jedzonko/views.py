@@ -2,7 +2,9 @@ from random import shuffle
 from datetime import datetime
 from django.shortcuts import render
 from django.views import View
+from django.core.paginator import Paginator
 from .models import Recipe
+
 
 from jedzonko.models import Recipe
 
@@ -31,7 +33,12 @@ class DashboardView(View):
 
 class RecipeView(View):
     def get(self, request):
-        return render(request, "app-recipes.html")
+        recipes_list = Recipe.objects.all().order_by('-votes', '-created').values()
+        # definicja stronicowania, przekazujemy pobrane elementy oraz liczbę elementów na stronę
+        paginator = Paginator(recipes_list, 2)
+        page = request.GET.get('page')
+        recipes = paginator.get_page(page)
+        return render(request, "app-recipes.html", context={'recipes': recipes})
 
       
 class RecipeAddView(View):

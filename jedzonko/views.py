@@ -139,7 +139,13 @@ class PlanAddView(View):
 
 class PlanAddRecipeView(View):
     def get(self, request):
-        return render(request, 'app-schedules-meal-recipe.html')
+        plans = Plan.objects.order_by('name')
+        recipes = Recipe.objects.order_by('name')
+        days = DayName.objects.order_by('order')
+        return render(request, 'app-schedules-meal-recipe.html', context={'plans': plans,
+                                                                          'recipes': recipes,
+                                                                          'days': days,
+                                                                          })
 
 
 class PlanView(View):

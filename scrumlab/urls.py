@@ -20,7 +20,6 @@ from jedzonko.views import IndexView, RecipeView, DashboardView, RecipeDetailsVi
     PlanDetailsView, PlanAddView, PlanAddRecipeView, PlanView
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
@@ -33,6 +32,5 @@ urlpatterns = [
     path('plan/add/', PlanAddView.as_view(), name='plan-add'),
     path('plan/add-receipe/', PlanAddRecipeView.as_view(), name='plan-add-recipe'),
     path('plan/list/', PlanView.as_view()),
-
 
 ]

@@ -30,15 +30,10 @@ class IndexView(View):
 class DashboardView(View):
     def get(self, request):
         plan_count = Plan.objects.count()
-        recipes_all = list(Recipe.objects.all())
-        total_count = len(recipes_all)
         ctx = {
-            'total_count': total_count,
-            'plan count': plan_count
-        }
+            'plan count': plan_count,
+                   }
         return render(request, template_name='dashboard.html', context=ctx)
-
-
 
 class RecipeView(View):
     def get(self, request):

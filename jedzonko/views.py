@@ -77,7 +77,8 @@ class RecipeAddView(View):
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
-        return render(request, 'app-recipe-details.html', context={"recipe": recipe})
+        ingredients = recipe.ingredients.split(',')
+        return render(request, 'app-recipe-details.html', context={"recipe": recipe, 'ingredients': ingredients})
 
 
 class RecipeModifyView(View):

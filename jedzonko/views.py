@@ -42,14 +42,12 @@ class DashboardView(View):
                 # create key with name of day
                 ctx_last_plan[day_name.get_name_display()] = {recipe_plan.order : {'meal': recipe_plan.meal_name,
                                                                         'recipe_name': recipe_name.name,
-                                                                        'id_recipe': recipe_plan.recipe_id,
-                                                                                   }}
+                                                                        'id_recipe': recipe_plan.recipe_id,}}
             else:
                 # update values for day
                 ctx_last_plan[day_name.get_name_display()].update({recipe_plan.order : {'meal': recipe_plan.meal_name,
                                                                         'recipe_name': recipe_name.name,
-                                                                        'id_recipe': recipe_plan.recipe_id,
-                                                                                        }})
+                                                                        'id_recipe': recipe_plan.recipe_id,}})
         ctx['plans'] = ctx_last_plan
         # print(ctx['plans'].keys())
         return render(request, template_name='dashboard.html', context=ctx)

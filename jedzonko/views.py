@@ -1,6 +1,6 @@
 from random import shuffle
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from .models import Recipe, Plan
 
@@ -48,15 +48,23 @@ class RecipeAddView(View):
         description = request.POST.get('description')
         preparation_time = request.POST.get('preparation_time')
         ingredients = request.POST.get('ingredients')
-        # code below "to unlock later"
-        # descritpion_preparing = request.POST.get('descritpion_preparing')
-
-        Recipe.objects.create(name=name,
-                              description=description,
-                              ingredients=ingredients,
-                              preparation_time=preparation_time,
-                              votes=0)
-        return render(request, template_name='app-add-recipe.html')
+        description_preparing = request.POST.get('description_preparing')
+        if (name != '' and
+            description != '' and
+            preparation_time != '' and
+            description_preparing != '' and
+            ingredients != ''):
+            Recipe.objects.create(name=name,
+                                  description=description,
+                                  ingredients=ingredients,
+                                  description_preparing=description_preparing,
+                                  preparation_time=preparation_time,
+                                  votes=0)
+            return redirect('recipe-list')
+        else:
+            return render(request, template_name='app-add-recipe.html',
+                          context={'error': 'Wszystkie pola muszą zostać uzupełnione'}
+                          )
       
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):

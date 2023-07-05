@@ -25,13 +25,12 @@ class IndexView(View):
 
 
 class DashboardView(View):
-    plan_count = Plan.objects.count()
-        recipes_count = Recipe.objects.count()
+   def get(self, request):
+        plan_count = Plan.objects.count()
         context = {
-            'plan_count': plan_count,
-            'recipes_count': recipes_count
+        'plan_count': plan_count,
         }
-        return render(request, 'dashboard.html', context=context)
+        return render(request, 'dashboard.html', context)
 
 
 class RecipeView(View):

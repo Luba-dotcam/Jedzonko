@@ -54,7 +54,7 @@
                                     <td class="col-2">{{ key.meal }}</td>
                                     <td class="col-8">{{ key.recipe_name }}</td>
                                     <td class="col-2"><button type="button" class="btn btn-primary rounded-0" >
-                                        <a href="{%  url 'recipe-details' key.id_recipe %}">
+                                        <a href="{%  url 'recipe-details' key.id_recipe %}" style="text-decoration: none; color: white">
                                         Szczegóły</a></button></td>
                                 </tr>
                             {% endfor %}

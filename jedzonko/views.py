@@ -27,7 +27,7 @@ class DashboardView(View):
     def get(self, request):
         recipes_count = Recipe.objects.count()
         last_plan = Plan.objects.order_by('created').last()
-        recipes_plan = RecipePlan.objects.all().filter(plan_id=last_plan.id).order_by('day_name_id', 'order')
+        recipes_plan = RecipePlan.objects.filter(plan_id=last_plan.id).order_by('day_name_id', 'order')
         ctx = {'recipes_count': recipes_count,
                'last_plan': last_plan}
         ctx_last_plan = {}

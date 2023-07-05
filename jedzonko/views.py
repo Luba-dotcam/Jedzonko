@@ -2,38 +2,39 @@ from random import shuffle
 from datetime import datetime
 from django.shortcuts import render
 from django.views import View
-from .models import Recipe
+from .models import Recipe, Plan, DayName
 
 from jedzonko.models import Recipe
 
+
 class IndexView(View):
-  
+
     def get(self, request):
         recipes_all = list(Recipe.objects.all())
         shuffle(recipes_all)
         ctx = {"actual_date": datetime.now(),
-           'recipes_1_name': recipes_all[0].name,
-           'recipes_1_description': recipes_all[0].description,
-           'recipes_2_name': recipes_all[1].name,
-           'recipes_2_description': recipes_all[1].description,
-           'recipes_3_name': recipes_all[2].name,
-           'recipes_3_description': recipes_all[2].description
-           }
+               'recipes_1_name': recipes_all[0].name,
+               'recipes_1_description': recipes_all[0].description,
+               'recipes_2_name': recipes_all[1].name,
+               'recipes_2_description': recipes_all[1].description,
+               'recipes_3_name': recipes_all[2].name,
+               'recipes_3_description': recipes_all[2].description
+               }
         return render(request, "index.html", ctx)
 
 
 class DashboardView(View):
 
     def get(self, request):
-            recipes_count = Recipe.objects.count()
-            return render(request, template_name='dashboard.html', context={'recipes_count': recipes_count})
+        recipes_count = Recipe.objects.count()
+        return render(request, template_name='dashboard.html', context={'recipes_count': recipes_count})
 
 
 class RecipeView(View):
     def get(self, request):
         return render(request, "app-recipes.html")
 
-      
+
 class RecipeAddView(View):
     def get(self, request):
         return render(request, template_name='app-add-recipe.html')
@@ -52,7 +53,8 @@ class RecipeAddView(View):
                               preparation_time=preparation_time,
                               votes=0)
         return render(request, template_name='app-add-recipe.html')
-      
+
+
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
@@ -68,7 +70,10 @@ class RecipeModifyView(View):
 class PlanDetailsView(View):
     def get(self, request, plan_id):
         plan = Plan.objects.get(id=plan_id)
-        return render(request, 'app-details-schedules.html', context={"plan": plan})
+        day_names = DayName.objects.order_by('order')
+        recipe_plans = plan.recipeplan_set.all().order_by('day_name__order', 'order')
+        return render(request, 'app-details-schedules.html',
+                      context={"plan": plan, 'day_names': day_names, 'recipe_plans': recipe_plans})
 
 
 class PlanAddView(View):

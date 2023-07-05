@@ -1,5 +1,6 @@
 from random import shuffle
 from datetime import datetime
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Recipe, Plan, DayName
@@ -10,7 +11,8 @@ from django.core.paginator import Paginator
 
 
 
-from jedzonko.models import Recipe
+from jedzonko.models import Recipe, Plan
+
 
 
 class IndexView(View):
@@ -129,4 +131,8 @@ class PlanAddRecipeView(View):
 
 class PlanView(View):
     def get(self, request):
-        return render(request, 'app-schedules.html')
+        plans = Plan.objects.order_by('name')
+        paginator = Paginator(plans, 50)
+        page_number = request.GET.get('page')
+        plans = paginator.get_page(page_number)
+        return render(request, 'app-schedules.html', {'plans': plans})

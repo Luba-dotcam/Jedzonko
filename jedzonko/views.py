@@ -2,9 +2,9 @@ from random import shuffle
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
+from django.http import HttpResponse
 from django.core.paginator import Paginator
 from .models import Recipe, Plan
-
 
 
 from jedzonko.models import Recipe
@@ -95,6 +95,20 @@ class PlanDetailsView(View):
 class PlanAddView(View):
     def get(self, request):
         return render(request, 'app-add-schedules.html')
+
+    def post(self, request):
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        if name != '' and description != '':
+            plan = Plan.objects.create(
+                name=name,
+                description=description
+            )
+            return redirect('plan-details', plan.id)
+        else:
+            return render(request, 'app-add-schedules.html',
+                          context={'error': 'Wszystkie pola muszą zostać uzupełnione'}
+                          )
 
 
 class PlanAddRecipeView(View):

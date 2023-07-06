@@ -147,6 +147,23 @@ class PlanAddRecipeView(View):
                                                                           'days': days,
                                                                           })
 
+    def post(self, request):
+        meal_name = request.POST.get('meal_name')
+        order = request.POST.get('order')
+        day_name_id = request.POST.get('day_name_id')
+        plan_id = request.POST.get('plan_id')
+        recipe_id = request.POST.get('recipe_id')
+        if plan_id != '' and meal_name != '' and order != '' and recipe_id != '' and day_name_id != '':
+            RecipePlan.objects.create(
+                meal_name=meal_name,
+                order=order,
+                day_name_id=day_name_id,
+                plan_id=plan_id,
+                recipe_id=recipe_id
+            )
+            return redirect('plan-details', plan_id)
+        return redirect('plan-add-recipe')
+
 
 class PlanView(View):
     def get(self, request):

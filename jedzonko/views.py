@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from django.core.paginator import Paginator
-from jedzonko.models import Recipe, Plan, RecipePlan, DayName
+from django.core.exceptions import ObjectDoesNotExist
+from jedzonko.models import Recipe, Plan, RecipePlan, DayName, Page
 
 
 
@@ -181,3 +182,12 @@ class PlanView(View):
         page_number = request.GET.get('page')
         plans = paginator.get_page(page_number)
         return render(request, 'app-schedules.html', {'plans': plans})
+
+
+class AboutView(View):
+    def get(self, request):
+        try:
+            about_page = Page.objects.get(slug='about')
+            return render(request, 'about.html', {'about_page': about_page})
+        except ObjectDoesNotExist:
+            return redirect("/#about")

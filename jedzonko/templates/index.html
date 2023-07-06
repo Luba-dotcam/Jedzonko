@@ -30,7 +30,7 @@
                 </li>
                 -->
                 <li class="nav-item ml-4">
-                    <a class="nav-link" href="#about">o aplikacji</a>
+                    <a class="nav-link" href="{% url 'about' %}">o aplikacji</a>
                 </li>
                 <li class="nav-item ml-4">
                     <a class="nav-link disabled" href="{% url 'recipe-list' %}">Przepisy</a>
@@ -81,7 +81,6 @@
             </a>
         </div>
     </section>
-<h1>Liczba dodanych planów: {{ total_count }}</h1>
     <section class="section-more padding-small">
         <div class="container d-flex justify-content-between">
             <div class="mr-4">

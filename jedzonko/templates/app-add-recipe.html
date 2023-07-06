@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="dashboard-content border-dashed p-3 m-4 view-height">
+    <a href="{% url 'recipe-add' %}" class="btn btn-primary">Dodaj przepis</a>
     <form action="" method="POST">
         {% csrf_token %}
         <div class="mt-4 ml-4 mr-4">

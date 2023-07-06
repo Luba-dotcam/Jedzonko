@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from django.core.paginator import Paginator
-
 from jedzonko.models import Recipe, Plan, RecipePlan, DayName
+
 
 
 class IndexView(View):

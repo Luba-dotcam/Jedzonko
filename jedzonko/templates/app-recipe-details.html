@@ -15,8 +15,9 @@
             </div>
             <div class="row">
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                <div class="col alert-item">
-                    <button type="submit" class="alert alert-success">Polub przepis</button>
+                <div >
+                    <button type="submit" name="increase_button" class="alert alert-success">Polub przepis</button>
+                    <button type="submit" name="decrease_button" class="alert alert-danger">Nie lubię przepisu</button>
                 </div>
             </div>
             <table class="table borderless">

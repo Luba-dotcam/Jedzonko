@@ -105,7 +105,10 @@ class RecipeDetailsView(View):
     def post(self, request, recipe_id):
         r_id = request.POST.get('recipe_id')
         recipe = Recipe.objects.get(pk=r_id)
-        recipe.votes += 1
+        if 'increase_button' in request.POST:
+            recipe.votes += 1
+        elif 'decrease_button' in request.POST:
+            recipe.votes -= 1
         recipe.save()
         return redirect('recipe-details', recipe.id)
 

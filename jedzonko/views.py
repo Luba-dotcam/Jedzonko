@@ -102,6 +102,12 @@ class RecipeDetailsView(View):
         ingredients = recipe.ingredients.split(',')
         return render(request, 'app-recipe-details.html', context={"recipe": recipe, 'ingredients': ingredients})
 
+    def post(self, request, recipe_id):
+        r_id = request.POST.get('recipe_id')
+        recipe = Recipe.objects.get(pk=r_id)
+        recipe.votes += 1
+        recipe.save()
+        return redirect('recipe-details', recipe.id)
 
 class RecipeModifyView(View):
     def get(self, request, recipe_id):

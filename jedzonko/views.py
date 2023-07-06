@@ -102,6 +102,12 @@ class RecipeDetailsView(View):
         ingredients = recipe.ingredients.split(',')
         return render(request, 'app-recipe-details.html', context={"recipe": recipe, 'ingredients': ingredients})
 
+    def post(self, request, recipe_id):
+        r_id = request.POST.get('recipe_id')
+        recipe = Recipe.objects.get(pk=r_id)
+        recipe.votes += 1
+        recipe.save()
+        return redirect('recipe-details', recipe.id)
 
 class RecipeModifyView(View):
     def get(self, request, recipe_id):
@@ -139,7 +145,13 @@ class PlanAddView(View):
 
 class PlanAddRecipeView(View):
     def get(self, request):
-        return render(request, 'app-schedules-meal-recipe.html')
+        plans = Plan.objects.order_by('name')
+        recipes = Recipe.objects.order_by('name')
+        days = DayName.objects.order_by('order')
+        return render(request, 'app-schedules-meal-recipe.html', context={'plans': plans,
+                                                                          'recipes': recipes,
+                                                                          'days': days,
+                                                                          })
 
 
 class PlanView(View):

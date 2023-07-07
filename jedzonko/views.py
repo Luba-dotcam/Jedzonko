@@ -2,7 +2,7 @@ from random import shuffle
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from jedzonko.models import Recipe, Plan, RecipePlan, DayName, Page
@@ -115,8 +115,11 @@ class RecipeDetailsView(View):
 
 class RecipeModifyView(View):
     def get(self, request, recipe_id):
-        recipe = Recipe.objects.get(id=recipe_id)
-        return render(request, 'app-edit-recipe.html', context={"recipe": recipe})
+        try:
+            recipe = Recipe.objects.get(id=recipe_id)
+            return render(request, 'app-edit-recipe.html', context={"recipe": recipe})
+        except Recipe.DoesNotExist:
+            raise Http404()
 
 
 class PlanDetailsView(View):
@@ -191,3 +194,12 @@ class AboutView(View):
             return render(request, 'about.html', {'about_page': about_page})
         except ObjectDoesNotExist:
             return redirect("/#about")
+
+          
+class ContactView(View):
+    def get(self, request):
+        try:
+            contact_page = Page.objects.get(slug='contact')
+            return render(request, 'contact.html', {'contact_page': contact_page})
+        except ObjectDoesNotExist:
+            return redirect("/#contact")

@@ -121,6 +121,34 @@ class RecipeModifyView(View):
         except Recipe.DoesNotExist:
             raise Http404()
 
+    def post(self, request, recipe_id):
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        preparation_time = request.POST.get('preparation_time')
+        ingredients = request.POST.get('ingredients')
+        description_preparing = request.POST.get('description_preparing')
+        if (name != '' and description != '' and preparation_time != '' and
+                description_preparing != '' and ingredients != ''):
+            if 'button_zapisz' in request.POST:
+                print('edytujemy i zapisjemy')
+                recipe = Recipe.objects.get(pk=recipe_id)
+                recipe.name = name
+                recipe.description = description
+                recipe.preparation_time = preparation_time
+                recipe.ingredients = ingredients
+                recipe.description_preparing = description_preparing
+                recipe.save()
+                return redirect('recipe-list')
+            elif 'button_wyslij' in request.POST:
+                print('wysyłamy nowy i zapisujemy')
+                Recipe.objects.create(name=name,
+                                      description=description,
+                                      preparation_time=preparation_time,
+                                      ingredients=ingredients,
+                                      description_preparing=description_preparing)
+                return redirect('recipe-list')
+        return render(request, 'app-edit-recipe.html', context={"error": 'Wszystkie pola muszą zostać uzupełnione'})
+
 
 class PlanDetailsView(View):
     def get(self, request, plan_id):

@@ -187,6 +187,15 @@ class PlanView(View):
         return render(request, 'app-schedules.html', {'plans': plans})
 
 
+class AboutView(View):
+    def get(self, request):
+        try:
+            about_page = Page.objects.get(slug='about')
+            return render(request, 'about.html', {'about_page': about_page})
+        except ObjectDoesNotExist:
+            return redirect("/#about")
+
+          
 class ContactView(View):
     def get(self, request):
         try:
